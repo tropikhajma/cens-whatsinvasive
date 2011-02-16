@@ -5,8 +5,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 public class CustomHttpClient extends DefaultHttpClient {
-	private final int CONNECT_TIMEOUT = 300000;
-	private final int SOCKET_TIMEOUT = 300000;
+	private final int CONNECT_TIMEOUT = 60000;
+	private final int SOCKET_TIMEOUT = 60000;
 	
 	public CustomHttpClient(){
 		HttpParams httpParams = this.getParams();
