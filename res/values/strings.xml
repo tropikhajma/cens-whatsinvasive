@@ -169,8 +169,8 @@
 <string name="upload_service_done1">What\'s Invasive uploaded observations.</string>
 <string name="upload_service_done2">Upload finished</string>
 <string name="upload_service_done3">What\'s Invasive finished uploading obvservations.</string>
-<string name="version">2.1</string>
-<string name="version_date">1289049280</string>
+<string name="version">2.2</string>
+<string name="version_date">1305199246</string>
 <string name="version_url">http://sm.whatsinvasive.com/phone/getversion.php</string>
 
 <string name="login_anon">Preview Mode</string>
