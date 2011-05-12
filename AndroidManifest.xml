@@ -49,6 +49,7 @@
 		<activity android:name="BlockingTagUpdate"></activity>
 		<activity android:name="NoteEdit" android:theme="@style/Float"
 			android:screenOrientation="sensor" android:windowSoftInputMode="adjustResize"></activity>
+	<provider android:name=".data.WhatsInvasiveProvider" android:authorities="edu.ucla.cens.whatsinvasive"></provider>
 	<service android:name=".services.DataService"></service>
 	</application>
 </manifest> 
