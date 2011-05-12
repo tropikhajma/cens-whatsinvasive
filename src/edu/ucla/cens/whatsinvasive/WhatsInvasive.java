@@ -60,8 +60,6 @@ public class WhatsInvasive extends Activity implements Observer {
 
     private final int MENU_ABOUT = 0;
 
-    private final int MENU_FEEDBACK = 1;
-
     private final int MENU_QUEUE = 2;
 
     private final int MENU_SETTINGS = 3;
@@ -682,7 +680,7 @@ public class WhatsInvasive extends Activity implements Observer {
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == event.KEYCODE_BACK) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
             boolean flag = false;
             if(event.getRepeatCount() == 3) {
                 finish();
