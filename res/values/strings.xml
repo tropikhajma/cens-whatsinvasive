@@ -239,4 +239,5 @@
 <string name="exit_back_alert">Press and hold the back button to exit.</string>
 
 <string name="news_api_path">phone/alerts.php</string>
+<string name="news_loading">Loading...</string>
 </resources>

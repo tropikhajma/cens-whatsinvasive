@@ -64,8 +64,7 @@
                 style="@style/HomeButton"
                 android:onClick="onNewsClick"
                 android:text="@string/main_button_news"
-                android:focusable="false"
-                android:drawableTop="@drawable/news_disabled"/>
+                android:drawableTop="@drawable/news_icon"/>
             <Button android:id="@+id/ButtonWeedOfTheWeek"
                 style="@style/HomeButton"
                 android:onClick="onWeedOfTheWeekClick"

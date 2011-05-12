@@ -155,7 +155,7 @@ public class WhatsInvasive extends Activity implements Observer {
 
         setContentView(R.layout.main);
         setTitle(R.string.title_whatsinvasive);
-        
+
         // Change the default exception handler so that we can collect debug information
         // on an uncaught exception
         final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -171,7 +171,7 @@ public class WhatsInvasive extends Activity implements Observer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                
+
                 defaultHandler.uncaughtException(thread, ex);
             }
         });
@@ -458,7 +458,7 @@ public class WhatsInvasive extends Activity implements Observer {
         } else
             textView.setText(getString(R.string.whatsinvasive_notlogged));
     }
-    
+
     @Override
     protected void onResume() {
         updatePark();
@@ -466,7 +466,7 @@ public class WhatsInvasive extends Activity implements Observer {
 
         super.onResume();
     }
-    
+
     @Override
     public void onDestroy() {
         Log.d(TAG, "close service connection");
@@ -491,13 +491,13 @@ public class WhatsInvasive extends Activity implements Observer {
     protected void showToast(String text, int length) {
         Toast.makeText(this, text, length).show();
     }
-    
+
     public void onLogoClick(View v) {
         Intent intent = new Intent(WhatsInvasive.this, Splash.class);
         intent.putExtra("return", true);
         WhatsInvasive.this.startActivity(intent);
     }
-    
+
     public void onTagWeedClick(View v) {
         mPreferences.edit().putBoolean("gps_off_alert2", true).commit();
         Intent intent = new Intent(WhatsInvasive.this,
@@ -505,7 +505,7 @@ public class WhatsInvasive extends Activity implements Observer {
         intent.putExtra("Type", TagType.WEED);
         WhatsInvasive.this.startActivity(intent);
     }
-    
+
     public void onTagPestClick(View v) {
         mPreferences.edit().putBoolean("gps_off_alert2", true).commit();
         Intent intent = new Intent(WhatsInvasive.this,
@@ -513,24 +513,25 @@ public class WhatsInvasive extends Activity implements Observer {
         intent.putExtra("Type", TagType.BUG);
         WhatsInvasive.this.startActivity(intent);
     }
-    
+
     public void onMapClick(View v) {
         Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
     }
-    
+
     public void onResultsClick(View v) {
         Intent intent = new Intent(WhatsInvasive.this, FeedbackTabs.class);
         WhatsInvasive.this.startActivity(intent);
     }
-    
+
     public void onNewsClick(View v) {
-        Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(WhatsInvasive.this, News.class);
+        WhatsInvasive.this.startActivity(intent);
     }
-    
+
     public void onWeedOfTheWeekClick(View v) {
         Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
     }
-    
+
     public void onLocationClick(View v) {
         Intent intent = new Intent(WhatsInvasive.this, AreaList.class);
         WhatsInvasive.this.startActivity(intent);
@@ -677,7 +678,7 @@ public class WhatsInvasive extends Activity implements Observer {
 
         return dialog;
     }
-    
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
@@ -691,7 +692,7 @@ public class WhatsInvasive extends Activity implements Observer {
                 flag = true;
             }
         }
-            
+
         return false;
     }
 }

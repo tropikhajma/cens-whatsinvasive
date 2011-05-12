@@ -68,6 +68,21 @@
 		<item name="android:background">@drawable/footer_background</item>
 	</style>
 	
+	<style name="NewsTitle">
+		<item name="android:textSize">@dimen/text_small</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/white</item>
+	</style>
+	
+	<style name="NewsContent">
+		<item name="android:textSize">@dimen/text_small</item>
+		<item name="android:textColor">@color/white</item>
+	</style>
+	
+	<style name="NewsMeta">
+		<item name="android:textSize">@dimen/text_xsmall</item>
+	</style>
+	
 	<style name="LayoutSpacer">
 		<item name="android:layout_weight">1</item>
 		<item name="android:layout_width">0dp</item>
