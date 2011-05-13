@@ -146,7 +146,7 @@ public class News extends TabActivity {
             content.setText(Html.fromHtml(tag.content));
             
             TextView date = (TextView) view.findViewById(R.id.news_date);
-            date.setText(new SimpleDateFormat("yyyy-MM-dd h:mm:ss a").format(new Date(tag.published * 1000)));
+            date.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date(tag.published * 1000)));
             
             view.setTag(tag);
         }
