@@ -2,8 +2,11 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@android:id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<TabWidget android:id="@android:id/tabs"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+	<HorizontalScrollView android:scrollbars="none" android:fillViewport="true"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TabWidget android:id="@android:id/tabs"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+	</HorizontalScrollView>
 	<FrameLayout android:id="@android:id/tabcontent"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:paddingTop="60dp">
