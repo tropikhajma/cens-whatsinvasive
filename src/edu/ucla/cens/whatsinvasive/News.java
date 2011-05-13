@@ -10,12 +10,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import edu.ucla.cens.whatsinvasive.data.WhatsInvasiveProviderContract;
 import edu.ucla.cens.whatsinvasive.data.WhatsInvasiveProviderContract.News.Category;
@@ -50,6 +54,8 @@ public class News extends TabActivity {
                 .setIndicator("Conservation")
                 .setContent(R.id.conservation));
 
+        this.fixTabs(tabHost.getTabWidget());
+
         final NewsItemClickListener listener = new NewsItemClickListener();
         final ListView plantListView = (ListView)findViewById(R.id.invasive_plants_list);
         plantListView.setOnItemClickListener(listener);
@@ -63,6 +69,28 @@ public class News extends TabActivity {
         conservationListView.setOnItemClickListener(listener);
         conservationListView.setAdapter(new NewsCursorAdapter(this, conservationCursor));
         conservationListView.setEmptyView(findViewById(R.id.conservation_empty));
+    }
+
+    private void fixTabs(TabWidget tabWidget) {
+        RelativeLayout.LayoutParams params = 
+            new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        int verticalMargin = (int) (2 * scale + 0.5f);
+        int horizontalMargin = (int) (4 * scale + 0.5f);
+        params.setMargins(horizontalMargin, verticalMargin, horizontalMargin, verticalMargin);
+        
+        for(int i = 0; i < tabWidget.getTabCount(); i++) {
+            View tab = tabWidget.getChildTabViewAt(i);
+            
+            View icon = tab.findViewById(android.R.id.icon);
+            icon.setVisibility(View.GONE);
+            
+            TextView title = (TextView)tab.findViewById(android.R.id.title);
+            title.setLayoutParams(params);
+            title.setGravity(Gravity.CENTER);
+            title.setSingleLine(false);
+        }
     }
 
     private class NewsTag {
