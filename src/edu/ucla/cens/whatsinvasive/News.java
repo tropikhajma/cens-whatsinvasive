@@ -32,15 +32,15 @@ public class News extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news);
 
-        final Uri contentUri = WhatsInvasiveProviderContract.News.CONTENT_URI;
-        final String where = WhatsInvasiveProviderContract.News.NEWS_CATEGORY + "=?";
-
-        final Cursor plantsCursor = managedQuery(contentUri, null, where,
-                new String[] { String.valueOf(Category.INVASIVE_PLANTS.value()) }, null);
-        final Cursor animalsCursor = managedQuery(contentUri, null, where,
-                new String[] { String.valueOf(Category.INVASIVE_ANIMALS.value()) }, null);
-        final Cursor conservationCursor = managedQuery(contentUri, null, where,
-                new String[] { String.valueOf(Category.CONSERVATION.value()) }, null);
+        final Cursor plantsCursor = managedQuery(
+                WhatsInvasiveProviderContract.News.buildCategoryUri(Category.INVASIVE_PLANTS.value()), 
+                null, null, null, null);
+        final Cursor animalsCursor = managedQuery(
+                WhatsInvasiveProviderContract.News.buildCategoryUri(Category.INVASIVE_ANIMALS.value()), 
+                null, null, null, null);
+        final Cursor conservationCursor = managedQuery(
+                WhatsInvasiveProviderContract.News.buildCategoryUri(Category.CONSERVATION.value()), 
+                null, null, null, null);
 
         final TabHost tabHost = getTabHost();
 
@@ -140,7 +140,7 @@ public class News extends TabActivity {
             title.setText(Html.fromHtml(tag.title));
             
             TextView author = (TextView) view.findViewById(R.id.news_author);
-            author.setText(tag.author);
+            author.setText(Html.fromHtml(tag.author));
             
             TextView content = (TextView) view.findViewById(R.id.news_content);
             content.setText(Html.fromHtml(tag.content));

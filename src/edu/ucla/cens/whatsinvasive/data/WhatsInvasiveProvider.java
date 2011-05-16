@@ -144,6 +144,7 @@ public class WhatsInvasiveProvider extends ContentProvider {
         String table;
         String nullColumnHack = null;
         Uri contentUri = null;
+        Uri secondaryNotificationUri = null;
         
         switch(sUriMatcher.match(uri)) {
         case NEWS:
@@ -153,6 +154,10 @@ public class WhatsInvasiveProvider extends ContentProvider {
             
             if(!values.containsKey(News.NEWS_ID)) {
                 throw new SQLException("News ID is required");
+            }
+            
+            if(values.containsKey(News.NEWS_CATEGORY)) {
+                secondaryNotificationUri = News.buildCategoryUri(values.getAsInteger(News.NEWS_CATEGORY));
             }
             
             break;
@@ -167,6 +172,10 @@ public class WhatsInvasiveProvider extends ContentProvider {
         if(rowId > 0) {
             Uri insertUri = ContentUris.withAppendedId(contentUri, rowId);
             mContentResolver.notifyChange(insertUri, null);
+            
+            if(secondaryNotificationUri != null) {
+                mContentResolver.notifyChange(secondaryNotificationUri, null);
+            }
             
             return insertUri;
         }
