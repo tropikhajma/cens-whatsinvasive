@@ -338,9 +338,9 @@ public class TagDatabase {
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		
 		if(limit==-1)
-			return db.query(DATABASE_AREAS_TABLE, new String[]{KEY_ID, KEY_TITLE, KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_UPDATED}, null, null, null, null, KEY_TITLE +" ASC");
+			return db.query(DATABASE_AREAS_TABLE, new String[]{KEY_ID, KEY_TITLE, KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_UPDATED}, null, null, null, null, KEY_TITLE +" COLLATE NOCASE ASC");
 		else
-			return db.query(DATABASE_AREAS_TABLE, new String[]{KEY_ID, KEY_TITLE, KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_UPDATED}, null, null, null, null, KEY_TITLE +" ASC", String.valueOf(limit));
+			return db.query(DATABASE_AREAS_TABLE, new String[]{KEY_ID, KEY_TITLE, KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_UPDATED}, null, null, null, null, KEY_TITLE +" COLLATE NOCASE ASC", String.valueOf(limit));
 	}
 	
 	private static class DatabaseHelper extends SQLiteOpenHelper
