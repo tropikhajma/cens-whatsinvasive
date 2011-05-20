@@ -45,13 +45,13 @@ public class News extends TabActivity {
         final TabHost tabHost = getTabHost();
 
         tabHost.addTab(tabHost.newTabSpec("plants")
-                .setIndicator("Invasive Plants")
+                .setIndicator(getString(R.string.news_invasive_plants))
                 .setContent(R.id.invasive_plants));
         tabHost.addTab(tabHost.newTabSpec("animals")
-                .setIndicator("Invasive Animals")
+                .setIndicator(getString(R.string.news_invasive_animals))
                 .setContent(R.id.invasive_animals));
         tabHost.addTab(tabHost.newTabSpec("conservation")
-                .setIndicator("Conservation")
+                .setIndicator(getString(R.string.news_conservation))
                 .setContent(R.id.conservation));
 
         this.fixTabs(tabHost.getTabWidget());

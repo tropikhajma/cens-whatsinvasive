@@ -240,4 +240,7 @@
 
 <string name="news_api_path">phone/alerts.php</string>
 <string name="news_loading">Loading...</string>
+<string name="news_invasive_plants">Invasive Plants</string>
+<string name="news_invasive_animals">Invasive Animals</string>
+<string name="news_conservation">Conservation</string>
 </resources>
