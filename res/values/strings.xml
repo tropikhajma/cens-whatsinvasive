@@ -24,7 +24,7 @@
 <string name="camera_take_photo">Take photo by pressing camera button or center directional pad.</string>
 <string name="cancel">Cancel</string>
 <string name="confirm">Confirm</string>
-<string name="credits">Jameel Al-Aziz\nChristy Brigham\nPatrick Crutcher\nDeborah Estrin\nEric Graham\nKyung Han\nJinha Kang\nCameron Ketcham\nOlmo Maldonado\nJeff Mascia\nKeith Mayoral\nNicolai Munk Petersen\nSasank Reddy\nEric Yuen</string>
+<string name="credits">Jameel Al-Aziz\nAdam Brenner\nChristy Brigham\nPatrick Crutcher\nDeborah Estrin\nEric Graham\nKyung Han\nJinha Kang\nCameron Ketcham\nOlmo Maldonado\nJeff Mascia\nKeith Mayoral\nNicolai Munk Petersen\nSasank Reddy\nEric Yuen</string>
 <string name="done">Done</string>
 <string name="dontremind">Don\'t Remind</string>
 <string name="empty_queue_text">\nTo edit or delete your previous observations, please visit us at our webpage:</string>
@@ -53,7 +53,7 @@
 <string name="help_main_para15">Your phone will also download the current list of top invasives for you to look out for.  You will be automatically notified of a change in the list of weeds or pests.  To manually update the list, go to:</string>
 <string name="help_main_para16">MENU &gt; Settings &gt; Invasives List</string>
 <string name="help_main_para17">Automatic Upload</string>
-<string name="help_main_para18">Your phone will upload your observations automatically.  You may turn off automatic upload if you have no reception or want to concerve battery life.</string>
+<string name="help_main_para18">Your phone will upload your observations automatically.  You may turn off automatic upload if you have no reception or want to conserve battery life.</string>
 <string name="help_main_para19">MENU &gt; Settings &gt; Enable upload</string>
 <string name="help_main_para2">It will allow you to do two things:\n\n(1) See a list of the top invasives\n\n(2) Record an observation of an invasive.</string>
 <string name="help_main_para20">Queue</string>
@@ -168,7 +168,7 @@
 <string name="upload_notification">upload_notification</string>
 <string name="upload_service_done1">What\'s Invasive uploaded observations.</string>
 <string name="upload_service_done2">Upload finished</string>
-<string name="upload_service_done3">What\'s Invasive finished uploading obvservations.</string>
+<string name="upload_service_done3">What\'s Invasive finished uploading observations.</string>
 <string name="version">2.2</string>
 <string name="version_date">1305199246</string>
 <string name="version_url">http://sm.whatsinvasive.com/phone/getversion.php</string>
@@ -193,14 +193,14 @@
 <string name="whatsinvasive_notlogged">Not logged in</string>
 <string name="title_feedback">What\'s Invasive! - Results</string>
 <string name="park_location_updated">Park updated</string>
-<string name="title_note">Obversation Note</string>
+<string name="title_note">Observation Note</string>
 <string name="note_title_prefix">Note for</string>
 <string name="invasive_mapping_failed">Failed to acquire location data.</string>
 <string name="header_tag_info">Information</string>
 <string name="header_tag_observation">Create an Observation</string>
 <string name="common_names_prefix">Other common names:</string>
 <string name="out_of_memory_title">Out of Memory!</string>
-<string name="out_of_memory_photo_msg">Please try retaking your photo at a lower resolution to aviod this error.</string>
+<string name="out_of_memory_photo_msg">Please try retaking your photo at a lower resolution to avoid this error.</string>
 <string name="out_of_memory_photo_retake">Retake Photo</string>
 <string name="feedback_tabs_personal">My Stats</string>
 <string name="feedback_tabs_global">Global Stats</string>
@@ -212,7 +212,7 @@
 <string name="data_path">/Android/data/edu.ucla.cens.whatsinvasive/</string>
 <string name="files_path">/Android/data/edu.ucla.cens.whatsinvasive/files/</string>
 <string name="dialog_upgrade_directory_title">Moving Data Directory</string>
-<string name="dialog_upgrade_directory_message">Please wait while we upgade the data directory.</string>
+<string name="dialog_upgrade_directory_message">Please wait while we upgrade the data directory.</string>
 
 <string name="preferences_category_upload">Upload</string>
 <string name="preferences_title_upload_service_on">Enable Upload</string>
