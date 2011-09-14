@@ -65,8 +65,12 @@ public class Settings extends PreferenceActivity implements Observer {
                 stopService(new Intent(this, LocationService.class));
             }
 	        return true;
-	    } else if(preference.getKey().equals("select_location")) {
+	    } else if(preference.getKey().equals("select_location_park")) {
 	        Intent intent = new Intent(this, AreaList.class);
+            startActivityForResult(intent, ACTIVITY_AREALIST);
+	        return true;
+	    } else if(preference.getKey().equals("select_location_county")) {
+	        Intent intent = new Intent(this, CountyList.class);
             startActivityForResult(intent, ACTIVITY_AREALIST);
 	        return true;
 	    } else if(preference.getKey().equals("refresh_lists")) {

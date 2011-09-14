@@ -13,9 +13,16 @@
 			android:title="@string/preferences_title_location_service_on"
 			android:summary="@string/preferences_summary_location_service_on"
 			android:defaultValue="true" />
-		<Preference android:key="select_location"
+		<PreferenceScreen android:key="select_location"
 			android:title="@string/preferences_title_select_location"
-			android:summary="@string/preferences_summary_select_location" />
+			android:summary="@string/preferences_summary_select_location"> 
+			<Preference android:key="select_location_park"
+                        android:summary="@string/preferences_summary_select_location_park"
+                        android:title="@string/preferences_title_select_location_park" />
+			<Preference android:key="select_location_county"
+                        android:summary="@string/preferences_summary_select_location_county"
+                        android:title="@string/preferences_title_select_location_county" />
+		</PreferenceScreen>
 		<Preference android:key="refresh_lists"
 			android:title="@string/preferences_title_refresh_lists"
 			android:summary="@string/preferences_summary_refresh_lists" />
