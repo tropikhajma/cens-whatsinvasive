@@ -3,6 +3,8 @@
 	<dimen name="twofour_sp">24sp</dimen>
 	<dimen name="twotwo_sp">22sp</dimen>
 	<dimen name="twozero_sp">20sp</dimen>
+	<dimen name="text_xlarge">24sp</dimen>
+	<dimen name="text_large">22sp</dimen>
 	<dimen name="text_medium">20sp</dimen>
 	<dimen name="text_small">16sp</dimen>
 	<dimen name="text_xsmall">14sp</dimen>

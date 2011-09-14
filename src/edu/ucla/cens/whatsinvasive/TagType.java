@@ -9,17 +9,19 @@ import java.util.Map;
  *
  */
 public enum TagType {
-    WEED(0, "phone/gettags.php"),
-    BUG(1, "phone/getanimaltags.php");
+    WEED(0, "phone/gettags.php", R.string.tag_title_weeds),
+    BUG(1, "phone/getanimaltags.php", R.string.tag_title_pests);
     
     private static final Map<Integer,TagType> lookup = new Hashtable<Integer,TagType>();
     private final int value;
     private final String url;
+    private final int resId;
     
-    TagType(int value, String url)
+    TagType(int value, String url, int resId)
     {
         this.value = value;
         this.url = url;
+        this.resId = resId;
     }
     static {
         for(TagType t : TagType.values())
@@ -29,4 +31,5 @@ public enum TagType {
     public static TagType lookup(int value) { return lookup.get(value); }
     public int value() { return value; }
     public String url() { return url; }
+    public int titleResource() { return resId; }
 }

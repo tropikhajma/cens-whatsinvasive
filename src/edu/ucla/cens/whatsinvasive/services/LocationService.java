@@ -304,16 +304,13 @@ public class LocationService extends Service {
 
         return id;
     }
-
-    public static String getParkTitle(Context context) {
-        // Default to the top-most area
-        long id = getParkId(context);
-
-        if (id != -1) {
+    
+    public static String getParkTitle(Context context, long parkId) {
+        if (parkId != -1) {
             TagDatabase db = new TagDatabase(context);
             db.openRead();
 
-            AreaRow area = db.getArea(id);
+            AreaRow area = db.getArea(parkId);
 
             db.close();
 
@@ -321,6 +318,11 @@ public class LocationService extends Service {
         } else {
             return null;
         }
+    }
+
+    public static String getParkTitle(Context context) {
+        // Default to the top-most area
+        return getParkTitle(context, getParkId(context));
     }
 
     public static class AreaUpdateThread extends TagUpdateThread {

@@ -39,6 +39,31 @@
 		<item name="android:ellipsize">end</item>
 	</style>
 	
+	<style name="TitlebarSupertext">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:paddingLeft">12dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>	
+	
+	<style name="TitlebarSubtext">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textSize">@dimen/text_xsmall</item>
+		<item name="android:paddingLeft">12dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+	
 	<style name="HomeButton">
 		<item name="android:layout_gravity">center_vertical</item>
 		<item name="android:layout_width">fill_parent</item>
@@ -81,6 +106,26 @@
 	
 	<style name="NewsMeta">
 		<item name="android:textSize">@dimen/text_xsmall</item>
+	</style>
+	
+	<style name="TaskTitle">
+		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/white</item>
+	</style>
+	
+	<style name="TaskDescription">
+		<item name="android:textSize">@dimen/text_small</item>
+	</style>
+	
+	<style name="TaskDivider">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">1px</item>
+		<item name="android:layout_marginTop">10dp</item>
+		<item name="android:layout_marginBottom">10dp</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:layout_marginRight">10dp</item>
+		<item name="android:background">@drawable/divider_light</item>
 	</style>
 	
 	<style name="LayoutSpacer">

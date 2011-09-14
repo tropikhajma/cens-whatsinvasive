@@ -243,4 +243,20 @@
 <string name="news_invasive_plants">Invasive Plants</string>
 <string name="news_invasive_animals">Invasive Animals</string>
 <string name="news_conservation">Conservation</string>
+
+<string name="tag_tasks_btn_add">Add</string>
+<string name="tag_tasks_btn_change">Change</string>
+<string name="tag_tasks_btn_submit">Submit Observation</string>
+<string name="tag_tasks_title_photo">Photo</string>
+<string name="tag_tasks_description_photo">Add a photo to your observation</string>
+<string name="tag_tasks_title_note">Note</string>
+<string name="tag_tasks_description_note">Add a note to your observation</string>
+<string name="tag_tasks_title_quantity">Quantity</string>
+<string name="tag_tasks_description_quantity">Adjust the quantity of observed invasives</string>
+<string name="tag_tasks_title_location">Location</string>
+<string name="tag_tasks_description_location">Adjust or confirm your location</string>
+<string name="tag_tasks_description_photo_replace">Replace photo</string>
+
+<string name="tag_title_weeds">Weeds</string>
+<string name="tag_title_pests">Pests</string>
 </resources>

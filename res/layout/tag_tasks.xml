@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent" android:layout_height="fill_parent">
+  <LinearLayout style="@style/Titlebar"
+  	android:gravity="center">
+  	<LinearLayout android:orientation="vertical"
+  		android:gravity="center"
+  		android:layout_width="wrap_content" android:layout_height="wrap_content">
+	  	<TextView android:id="@+id/common_name"
+	    	style="@style/TitlebarText"       
+			android:text="Species name"/>
+		<TextView android:id="@+id/science_name"
+	    	style="@style/TitlebarSubtext"       
+			android:text="Scientific name"/>
+	</LinearLayout>
+  </LinearLayout>
+  <ScrollView android:fillViewport="true"
+  	android:layout_width="fill_parent" android:layout_height="fill_parent"
+  	android:layout_weight="1">
+	  <TableLayout
+	  	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	  	android:paddingTop="10dp"
+	  	android:stretchColumns="2">
+	  	<TableRow android:id="@+id/tag_task_photo">
+	  		<include layout="@layout/tag_task"/>
+	  	</TableRow>
+	  	<View style="@style/TaskDivider"/>
+	  	<TableRow android:id="@+id/tag_task_note">
+	  		<include layout="@layout/tag_task"/>
+	  	</TableRow>
+	  	<View style="@style/TaskDivider"/>
+	  	<TableRow android:id="@+id/tag_task_quantity">
+	  		<include layout="@layout/tag_task"/>
+	  	</TableRow>
+	  	<View style="@style/TaskDivider"/>
+	  	<TableRow android:id="@+id/tag_task_location">
+	  		<include layout="@layout/tag_task"/>
+	  	</TableRow>
+	  </TableLayout>
+  </ScrollView>
+  <Button android:id="@+id/submit_btn"
+  	android:layout_width="wrap_content" android:layout_height="wrap_content"
+  	android:layout_gravity="center_horizontal"
+  	android:text="@string/tag_tasks_btn_submit"/>
+</LinearLayout>

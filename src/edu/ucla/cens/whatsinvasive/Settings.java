@@ -128,12 +128,12 @@ public class Settings extends PreferenceActivity implements Observer {
 							case AlertDialog.BUTTON1:
 								mPreferences.edit().putBoolean("upload_service_on", true).commit();
 				                refreshView();
-								startActivityForResult(intent, HELP_IMAGE);
+								startActivity(intent);
 							break;
 							case AlertDialog.BUTTON2:
 								mPreferences.edit().putBoolean("upload_service_on", false).commit();	
 				                refreshView();
-								startActivityForResult(intent, HELP_IMAGE);
+								startActivity(intent);
 							break;
 							}
 						}
@@ -146,11 +146,6 @@ public class Settings extends PreferenceActivity implements Observer {
 					dialog.show();
 				}
 				
-				break;
-			case HELP_IMAGE:
-				if (resultCode == RESULT_OK) {
-					TagLocation.isLocationEnabled(Settings.this);
-				}
 				break;
 			case WhatsInvasive.CHANGE_GPS_SETTINGS:
 				Settings.this.finish();

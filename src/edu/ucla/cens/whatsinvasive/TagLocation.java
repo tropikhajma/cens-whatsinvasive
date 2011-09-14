@@ -1,38 +1,18 @@
 package edu.ucla.cens.whatsinvasive;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -41,23 +21,16 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import edu.ucla.cens.whatsinvasive.data.PhotoDatabase;
 import edu.ucla.cens.whatsinvasive.data.TagDatabase;
 import edu.ucla.cens.whatsinvasive.services.LocationService;
-import edu.ucla.cens.whatsinvasive.services.UploadService;
 import edu.ucla.cens.whatsinvasive.tools.Media;
 
-public class TagLocation extends ListActivity implements LocationListener {
+public class TagLocation extends ListActivity {
     
     public static final String PREFERENCES_USER = "user";
     
@@ -65,10 +38,8 @@ public class TagLocation extends ListActivity implements LocationListener {
     private Cursor mCursor;
     
     private TagType mTagType;
-
-    private static final int ACTIVITY_CAPTURE_PHOTO = 0;
     
-    private static final int ACTIVITY_CAPTURE_NOTE = 1;
+    private long mParkId;
 
     private static final int MENU_HELP = 0;
 
@@ -77,23 +48,8 @@ public class TagLocation extends ListActivity implements LocationListener {
     private static final int QUEUE_SCREEN = 323;
 
     private static final int SETTINGS_HELP = 182;
-
-    private static final int ACTIVITY_SETTINGS_COMPLETE = 2318;
-
-    private static final int GPS_POLL_INTERVAL = 20000;
     
-    private static final int MAX_IMAGE_WIDTH = 1280;
-    
-    private static final int MAX_IMAGE_HEIGHT = 960;
-    
-    private final int DIALOG_TEST_LOGIN = 0;
-
-    // private Location current_location;
-
-    private CheckBox mPhoto;
-    private CheckBox mNote;
-
-    private RadioGroup mRadioGroup;
+    private static final int DIALOG_TEST_LOGIN = 0;
 
     // Check user preferences
     SharedPreferences mPreferences;
@@ -106,8 +62,6 @@ public class TagLocation extends ListActivity implements LocationListener {
 
         // Check user preferences
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        
-        checkGPS();
 
         mTagType = (TagType)TagLocation.this.getIntent().getSerializableExtra("Type");
         
@@ -125,26 +79,6 @@ public class TagLocation extends ListActivity implements LocationListener {
             mPreferences.edit().putBoolean("seen_tag_help", true).commit();
         }
         
-        mRadioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        mPhoto = (CheckBox) findViewById(R.id.with_photo);
-        mNote = (CheckBox) findViewById(R.id.with_note);
-
-        LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (!lManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Log.d(TAG, "GPS is not enabled");
-            setTitle(R.string.title_taglocation_no_gps);
-            
-            if (!lManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                Log.d(TAG, "Network Location is not enabled");
-                setTitle(R.string.title_taglocation_all_disabled);
-            }
-        } else {
-            Log.d(TAG, "Requesting GPS location updates");
-            lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    GPS_POLL_INTERVAL, 0, this);
-        }
-
         mDatabase = new TagDatabase(this);
                 
         getListView().addHeaderView(getListHeader());
@@ -156,12 +90,13 @@ public class TagLocation extends ListActivity implements LocationListener {
         Log.d(TAG, "Opening database");
         
         mDatabase.openRead();
-        mCursor = mDatabase.getTags(LocationService.getParkId(this), TagLocation.this.mTagType);
+        mParkId = LocationService.getParkId(this);
+        mCursor = mDatabase.getTags(mParkId, mTagType);
         startManagingCursor(mCursor);
-        
         setListAdapter(new TagAdapter(mCursor));
-        
-        updateButtons();
+
+        final TextView parkName = (TextView)findViewById(R.id.park_name);
+        parkName.setText(LocationService.getParkTitle(this, mParkId));
         
         super.onResume();
     }
@@ -210,158 +145,6 @@ public class TagLocation extends ListActivity implements LocationListener {
         
         return layout;
     }
-
-    @Override
-    public void onDestroy() {
-        LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (lManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Log.d(TAG, "Removing GPS Location update listener");
-            lManager.removeUpdates(this);
-        }
-        
-        super.onDestroy();
-    }
-
-    private void updateButtons() {
-        RadioButton radio_amount = (RadioButton) findViewById(mPreferences
-                .getInt("amount_id", mRadioGroup.getCheckedRadioButtonId()));
-        radio_amount.toggle();
-
-        mRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.i(TAG, "Amount = " + checkedId);
-                mPreferences.edit().putInt("amount_id", checkedId).commit();
-            }
-
-        });
-
-        mPhoto.setChecked(mPreferences.getBoolean("take_photo", true));
-        mPhoto.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.i(TAG, "Photo enabled = " + mPhoto.isChecked());
-                mPreferences.edit().putBoolean("take_photo", mPhoto.isChecked())
-                        .commit();
-
-            }
-        });
-        
-        mNote.setChecked(mPreferences.getBoolean("take_note", true));
-        mNote.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.i(TAG, "Note enabled = " + mNote.isChecked());
-                mPreferences.edit().putBoolean("take_note", mNote.isChecked())
-                        .commit();
-
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-        case ACTIVITY_CAPTURE_PHOTO:
-            if (resultCode == Activity.RESULT_OK) {
-                Log.d(TAG, "Returned OK from Camera activity");
-                
-                final String fileName = this.getIntent().getStringExtra("filename");
-                File file = new File(fileName);
-                Bitmap image = null;
-                
-                try {
-                    // Fix for HTC Sense Camera
-                    // If "data" is not null, then we need to save that bitmap
-                    // before we scale it
-                    if(data != null)
-                        image = (Bitmap)data.getExtras().get("data");
-                    
-                    if(image != null && !file.exists()) {
-                        Log.d(TAG, "HTC Camera, creating file from data");
-                        OutputStream os = new FileOutputStream(file);
-                        image.compress(CompressFormat.JPEG, 100, os);
-                        os.close();
-                    }
-                    
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    
-                    options.inJustDecodeBounds= true;
-                    BitmapFactory.decodeFile(fileName, options);
-                    
-                    int factor = Math.max(options.outWidth / MAX_IMAGE_WIDTH, 
-                            options.outHeight / MAX_IMAGE_HEIGHT);
-                    
-                    if(factor == 0)
-                        factor = 1;
-                    
-                    Log.d(TAG, "Image scaling factor = " + factor);
-                    
-                    options.inSampleSize = msb32(factor);                    
-                    options.inPurgeable = true;
-                    options.inInputShareable = true;
-                    options.inJustDecodeBounds= false;
-                    image = BitmapFactory.decodeFile(fileName, options);
-                    Bitmap scaledImage;
-                    
-                    if(image == null) {
-                        Log.e(TAG, "File '" + fileName + "' cannot be decoded into a Bitmap!");
-                    } else {  
-                        if(image.getWidth() > MAX_IMAGE_WIDTH || image.getHeight() > MAX_IMAGE_HEIGHT) {
-                            float scale = Math.min(MAX_IMAGE_WIDTH/(float)image.getWidth(), 
-                                    MAX_IMAGE_HEIGHT/(float)image.getHeight());
-                            int newWidth = (int) ((image.getWidth() * scale) + 0.5f);
-                            int newHeight = (int) ((image.getHeight() * scale) + 0.5f);
-                            
-                            Log.i(TAG, "Scaling bitmap: width=" + newWidth + ", height=" + newHeight);
-                            
-                            scaledImage = Bitmap.createScaledBitmap(image, newWidth, newHeight, true);
-                            image.recycle();
-                        } else {
-                            // Since the original image was "purgeable"
-                            // we have to reload the all bitmap data into memory
-                            // or we'll erase the file when we write it back out
-                            image.recycle();
-                            scaledImage = BitmapFactory.decodeFile(fileName);
-                        }
-                        
-                        file = new File(fileName);
-                        OutputStream os = new FileOutputStream(file);
-                        scaledImage.compress(CompressFormat.JPEG, 80, os);
-                        os.close();
-                    }
-                } catch (FileNotFoundException e) {
-                    Log.e(TAG, "File not found!", e);
-                } catch (IOException e) {
-                    Log.e(TAG, "IO Exception:", e);
-                } catch (OutOfMemoryError e) {
-                    Log.e(TAG, "Out of memory!", e);
-                    new AlertDialog.Builder(this)
-                        .setTitle(R.string.out_of_memory_title)
-                        .setMessage(R.string.out_of_memory_photo_msg)
-                        .setPositiveButton(R.string.out_of_memory_photo_retake, new OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                new File(fileName).delete();
-                                capturePhoto();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-                    
-                    return;
-                }
-
-                captureNote();
-            }
-
-            break;
-        case ACTIVITY_CAPTURE_NOTE:
-            if(resultCode == Activity.RESULT_OK) {
-                String note = data.getExtras().getString("note");
-                this.getIntent().putExtra("note", note);
-                recordObservation();
-            }
-            break;
-        }
-    }
     
     @Override
     protected Dialog onCreateDialog(int id) {        
@@ -376,189 +159,6 @@ public class TagLocation extends ListActivity implements LocationListener {
             return super.onCreateDialog(id);
         
         }
-    }
-
-    private int msb32(int x)
-    {
-        x |= (x >> 1);
-        x |= (x >> 2);
-        x |= (x >> 4);
-        x |= (x >> 8);
-        x |= (x >> 16);
-        return (x & ~(x >> 1));
-    }
-
-    private void checkGPS() {
-        LocationManager manager = (LocationManager) TagLocation.this
-                .getSystemService(Context.LOCATION_SERVICE);
-
-        boolean gpsOffAlert = mPreferences.getBoolean("gps_off_alert", true);
-        boolean gpsOffAlert2 = mPreferences.getBoolean("gps_off_alert2", true);
-
-        if (gpsOffAlert
-                && gpsOffAlert2
-                && !(manager.isProviderEnabled("gps") || manager
-                        .isProviderEnabled("network"))) {
-            AlertDialog alert = new AlertDialog.Builder(TagLocation.this)
-                    .setTitle(getString(R.string.msg_gps_unavailable))
-                    .setMessage(getString(R.string.msg_gps_unavailable_long))
-                    .setPositiveButton(android.R.string.ok,
-                            new OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    mPreferences.edit().putBoolean(
-                                            "gps_off_alert2", false).commit();
-                                }
-                            }).setNegativeButton(R.string.dontremind,
-                            new OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    mPreferences.edit().putBoolean(
-                                            "gps_off_alert", false).commit();
-                                }
-                            }).create();
-
-            alert.show();
-        }
-    }
-
-    private boolean saveToDatabase(String tag, String amount, String note,
-            String filename) {
-
-        PhotoDatabase pdb = new PhotoDatabase(this);
-
-        double longitude = 0.0;
-        double latitude = 0.0;
-        float accuracy = 0.0F;
-
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        
-        /* This is the new method of sending the date and time.
-         * It uses the ISO 8601 standard which include time zone information.
-         * TODO: Uncomment the following lines of code when the server-side code has been updated
-        Calendar calendar = Calendar.getInstance();
-        W3CDateFormat dateFormat = new W3CDateFormat(W3CDateFormat.Pattern.SECOND);
-        */
-        
-        String time = dateFormat.format(calendar.getTime());
-
-        // The logic here is this: if GPS is available and the lock happened
-        // less than ten minutes ago, go with the GPS. Otherwise, try to use network
-        // location.
-        long gpsdelay = 60 * 10;
-
-        LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        String text = "Using GPS\n";
-        Location loc = lManager.getLastKnownLocation("gps");
-        long curtime = System.currentTimeMillis() / 1000;
-        
-        if (loc == null || ((curtime - (loc.getTime() / 1000)) > gpsdelay)) {
-            loc = lManager.getLastKnownLocation("network");
-            text = "Using network\n";
-        }
-
-        if (loc != null) {
-            text += (curtime - (loc.getTime() / 1000)) + " seconds since last lock.\n";
-            
-            longitude = loc.getLongitude();
-            latitude = loc.getLatitude();
-            accuracy = loc.getAccuracy();
-        }
-        
-        Log.d("GPS INFO", text + "lat: " + latitude + "\nlng:" + longitude);
-        if (tag.equals("Other\nPlant")) {
-            tag = "Other";
-        }
-
-        if (tag.equals("notvalid") && (filename != null)) {
-            File file = null;
-            file = new File(filename.toString());
-
-            if (file != null) {
-                file.delete();
-            }
-
-            return false;
-        } else {
-            // Lets add it to a DB (the filename will be NULL if no picture was
-            // taken)
-            pdb.open();
-            Log.d(TAG, "Adding observation to the database");
-            long photo_created = pdb.createPhoto(longitude, latitude, time, accuracy,
-                    filename, tag, LocationService.getParkId(this), amount, note, mTagType.value());
-            pdb.close();
-
-            // start the upload service if auto upload is on because we now have
-            // data to upload
-            if (photo_created != -1
-                    && mPreferences.getBoolean("upload_service_on", true)) {
-                Log.d(TAG, "Starting Upload Service");
-                Intent service = new Intent(this, UploadService.class);
-                this.startService(service);
-
-                mPreferences.edit().putBoolean("upload_service_on", true).commit();
-            }
-
-            if (photo_created == -1)
-                return false;
-            else
-                return true;
-        }
-    }
-
-    public static boolean isLocationEnabled(final Activity activity) {
-        LocationManager manager = (LocationManager) activity
-                .getSystemService(Context.LOCATION_SERVICE);
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        
-        if(preferences.getLong("fixed_area", -1) == -1)
-            preferences.edit().putLong("fixed_area", 9).commit();
-
-        if (!(manager.isProviderEnabled("gps") || manager.isProviderEnabled("network"))) {
-            AlertDialog alert = new AlertDialog.Builder(activity).setTitle(
-                    activity.getString(R.string.msg_gps_location_disabled))
-                    .setMessage(
-                            activity.getString(R.string.msg_gps_cannot_access))
-                    .setPositiveButton(android.R.string.ok,
-                            new OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    Intent intent = new Intent(
-                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                    activity.startActivityForResult(intent,
-                                                    WhatsInvasive.CHANGE_GPS_SETTINGS_2);
-
-                                }
-                            }).setNegativeButton(android.R.string.cancel,
-                            new OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    activity
-                                            .showDialog(WhatsInvasive.BLOCKING_TAG);
-                                    preferences.edit()
-                                        .putBoolean("location_service_on", false)
-                                        .commit();
-                                    Intent intent = new Intent(activity, BlockingTagUpdate.class);
-                                    activity.startActivityForResult(intent,
-                                            WhatsInvasive.CHANGE_GPS_SETTINGS);
-
-                                }
-                            }).create();
-
-            alert.show();
-
-            return false;
-        }
-
-        return true;
     }
 
     @Override
@@ -591,101 +191,8 @@ public class TagLocation extends ListActivity implements LocationListener {
             startActivity(intent);
             break;
         }
+        
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onLocationChanged(Location location) {
-        Time now = new Time();
-        now.setToNow();
-
-        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-            setTitle(getString(R.string.title_taglocation_lastupdate_gps)
-                    + now.format("%l:%M:%S%p") + " [�"
-                    + (int) location.getAccuracy() + " m]");
-        } else {
-            setTitle(getString(R.string.title_taglocation_lastupdate_gps)
-                    + now.format("%l:%M:%S%p")
-                    + R.string.title_taglocation_network);
-        }
-    }
-
-    public void onProviderDisabled(String provider) {
-        if (provider.equals(LocationManager.GPS_PROVIDER)) {
-            setTitle(R.string.title_taglocation_gpsdisabled);
-            LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            lManager.removeUpdates(this);
-        }
-    }
-
-    public void onProviderEnabled(String provider) {
-        if (provider.equals(LocationManager.GPS_PROVIDER)) {
-            LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    GPS_POLL_INTERVAL, 0, this);
-        }
-    }
-
-    public void onStatusChanged(String provider, int status, Bundle extras) { }
-    
-    private void capturePhoto() 
-    {
-        if (!mPhoto.isChecked()) {
-            Log.d(TAG, "No photo!");
-            captureNote();
-        } else {
-            Date date = new Date();
-            long time = date.getTime();
-            String fileName = this.getString(R.string.files_path) + time + ".jpg";
-
-            File file = new File(Environment.getExternalStorageDirectory(), fileName);
-            
-            this.getIntent().putExtra("filename", file.getPath());
-            Log.i(TAG, "Photo filename = " + file.getPath());
-        
-            Log.d(TAG, "Starting camera activity...");
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-            startActivityForResult(intent, ACTIVITY_CAPTURE_PHOTO);
-        }
-    }
-    
-    private void captureNote() 
-    {
-        if(!mNote.isChecked()) {
-            Log.d(TAG, "No note!");
-            recordObservation();
-        } else {
-            Log.d(TAG, "Starting note activity...");
-            Intent intent = new Intent(this, NoteEdit.class);
-            String title = getString(R.string.note_title_prefix) + " " + getIntent().getStringExtra("Tag");
-            intent.putExtra("title", title);
-            startActivityForResult(intent, ACTIVITY_CAPTURE_NOTE);
-        }
-    }
-    
-    private void recordObservation()
-    {
-        Bundle extras = this.getIntent().getExtras();
-        
-        String tag = extras.getString("Tag");
-        String amount = extras.getString("amount");
-        String note = extras.getString("note");
-        String filename = extras.getString("filename");
-        
-        Intent result = new Intent();
-        result.putExtras(extras);
-        
-        // Erase the extras for the next observation
-        this.getIntent().replaceExtras((Bundle)null);
-
-        Log.d(TAG, "Recording observation: tag = " + tag + ", amount = " + amount);
-        
-        if (TagLocation.this.saveToDatabase(tag,
-                amount, note, filename)) {
-            Toast.makeText(this, getString(R.string.invasive_mapped_notice), 5).show();
-        } else {
-            Toast.makeText(this, getString(R.string.invasive_mapping_failed), Toast.LENGTH_LONG).show();
-        }
     }
     
     private class TagItemClickListener implements OnItemClickListener
@@ -707,18 +214,14 @@ public class TagLocation extends ListActivity implements LocationListener {
                 return;
             }
 
-            final String tagtext = data.title;
-
-            RadioButton radio_amount = (RadioButton) findViewById(mPreferences
-                    .getInt("amountId", mRadioGroup.getCheckedRadioButtonId()));
-            final String amounttext = radio_amount.getTag().toString();
-
             // Tag this invasive
-            TagLocation.this.getIntent().putExtra("Type", mTagType);
-            TagLocation.this.getIntent().putExtra("Tag", tagtext);
-            TagLocation.this.getIntent().putExtra("amount", amounttext);
-            
-            capturePhoto();
+            final Intent intent = new Intent(TagLocation.this, TagTasks.class);
+            intent.putExtra("type", mTagType);
+            intent.putExtra("park_id", mParkId);
+            intent.putExtra("id", data.id);
+            intent.putExtra("common_name", data.title);
+            intent.putExtra("science_name", data.scienceName);
+            TagLocation.this.startActivity(intent);
         }
     }
 

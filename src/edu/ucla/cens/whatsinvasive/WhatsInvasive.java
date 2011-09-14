@@ -92,8 +92,6 @@ public class WhatsInvasive extends Activity implements Observer {
 
     private static final int WELCOMER_RESULT = 58;
 
-    protected static final int HELP_IMAGE = 59;
-
     protected static final int CHANGE_GPS_SETTINGS = 23;
 
     protected static final int CHANGE_GPS_SETTINGS_2 = 24;
@@ -606,8 +604,7 @@ public class WhatsInvasive extends Activity implements Observer {
                             break;
                         }
 
-                        WhatsInvasive.this.startActivityForResult(intent,
-                                HELP_IMAGE);
+                        WhatsInvasive.this.startActivity(intent);
                     }
                 };
 
@@ -634,12 +631,6 @@ public class WhatsInvasive extends Activity implements Observer {
             Intent intent = new Intent(WhatsInvasive.this,
                     BlockingTagUpdate.class);
             this.startActivityForResult(intent, CHANGE_GPS_SETTINGS);
-            break;
-        case HELP_IMAGE:
-            if (resultCode == RESULT_OK) {
-                TagLocation.isLocationEnabled(WhatsInvasive.this);
-            }
-
             break;
         }
     }

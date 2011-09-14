@@ -33,7 +33,7 @@
 				<category android:name="android.intent.category.LAUNCHER"></category>
 			</intent-filter>
 		</activity>
-		<activity android:name="TagLocation" android:screenOrientation="portrait"></activity>
+		<activity android:name="TagLocation"></activity>
 		<activity android:name="Settings" android:screenOrientation="portrait" 
 			android:theme="@android:style/Theme"></activity>
 		<activity android:name="Queue" android:screenOrientation="portrait"></activity>
@@ -52,5 +52,6 @@
 	<activity android:name="News"></activity>
 	<provider android:name=".data.WhatsInvasiveProvider" android:authorities="edu.ucla.cens.whatsinvasive"></provider>
 	<service android:name=".services.DataService"></service>
+	<activity android:name="TagTasks"></activity>
 	</application>
 </manifest> 
