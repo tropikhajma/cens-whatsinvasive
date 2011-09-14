@@ -5,13 +5,17 @@ Idea is to add another "park" for the entire county. The invasive plants will be
 
 Logic:
 ------
-Settings Screen:
-	- Add "Select your County"
-		Once a county is selected, based off GPS (use FCC database http://reboot.fcc.gov/developer/census-block-conversions-api).
-		This will give a county name that we can use to pull data from http://plants.usda.gov/adv_search.html
-		Store county name in memory
-		Change park id to the hidden park "USDA Global"
-	- Add a button on the main screen (removing IoTW) to load the same processes for adding a Weed to any other park
+- Settings Screen: Add "Select your County"
+    - Once a county is selected, based off GPS (use FCC database http://reboot.fcc.gov/developer/census-block-conversions-api).
+
+    - This will give a county name that we can use to pull data from http://plants.usda.gov/adv_search.html
+
+    - Store county name in memory
+
+    - Change park id to the hidden park "USDA Global"
+
+- Add a button on the main screen (removing IoTW) to load the same processes for adding a Weed to any other park
+
 
 Thats it? Hopefully...
 
