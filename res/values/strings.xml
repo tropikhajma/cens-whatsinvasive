@@ -242,7 +242,7 @@
 <string name="send_debug_not_collected">No debugging info collected.</string>
 
 <string name="exit_application_title">Exit What\'s Invasive</string>
-<string name="exit_application_message">Press and hold the back button to exit.</string>
+<string name="exit_application_message">Are you sure you want to close What\'s Invasive?</string>
 <string name="exit_button_yes">Yes</string>
 <string name="exit_button_no">No</string>
 
