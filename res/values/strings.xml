@@ -80,7 +80,7 @@
 <string name="help_settings_8">You will be automatically notified of any change in the list of top invasives. This option is then required to manually update the list.</string>
 <string name="help_settings_9">Login</string>
 <string name="help_settings_select_park">Select a park to download an invasives list. If GPS is enabled, the list includes only the ten closest parks to your current location. Check \"Show All Parks\" to show all the parks.</string>
-<string name="help_settings_title">Settings Help</string>
+<string name="help_settings_select_county">Select a county to download an invasives list from the USDA. If GPS is enabled, the list includes only the ten closest counties to your current location. Check \"Show All Counties\" to show all the counties across the US.</string><string name="help_settings_title">Settings Help</string>
 <string name="help_tagging_num3">(3)</string>
 <string name="help_tagging_para2">Select the quantity of weeds or pests that you see.</string>
 <string name="help_tagging_para3">Select if you want to include a photo or add notes to your observation.</string>
@@ -207,6 +207,7 @@
 <string name="feedback_fail">Failed to download results.\n\nMake sure you have network coverage before trying again.</string>
 <string name="feedback_timeout">No response</string>
 <string name="toggle_all_parks">Show All Parks</string>
+<string name="toggle_all_counties">Show All Counties</string>
 <string name="login_test_title">Using Preview Mode</string>
 <string name="login_test_msg">While in Preview Mode, you can explore all the feautures of the application. However, you may only submit observations to the DEMO park.\n\nTo select the DEMO park please go to Settings->\"Show parks\" then select DEMO from the list.</string>
 <string name="data_path">/Android/data/edu.ucla.cens.whatsinvasive/</string>
@@ -220,8 +221,12 @@
 <string name="preferences_category_location">Location</string>
 <string name="preferences_title_location_service_on">Enable Auto-Location</string>
 <string name="preferences_summary_location_service_on">Enable or disable the auto-location service</string>
-<string name="preferences_title_select_location">Select Location</string>
-<string name="preferences_summary_select_location">Change your selected park</string>
+<string name="preferences_title_select_location">Select Location &amp; County</string>
+<string name="preferences_summary_select_location">Change your selected county and park</string>
+<string name="preferences_title_select_location_park">Select Location</string>
+<string name="preferences_summary_select_location_park">Change your selected park</string>
+<string name="preferences_title_select_location_county">Select County</string>
+<string name="preferences_summary_select_location_county">Change your selected county</string>
 <string name="preferences_title_refresh_lists">Refresh Lists</string>
 <string name="preferences_summary_refresh_lists">Update to the latest invasives lists</string>
 <string name="preferences_category_login">Login</string>
@@ -236,7 +241,10 @@
 <string name="chooser_send_debug">Send debugging info...</string>
 <string name="send_debug_not_collected">No debugging info collected.</string>
 
-<string name="exit_back_alert">Press and hold the back button to exit.</string>
+<string name="exit_application_title">Exit What\'s Invasive</string>
+<string name="exit_application_message">Press and hold the back button to exit.</string>
+<string name="exit_button_yes">Yes</string>
+<string name="exit_button_no">No</string>
 
 <string name="news_api_path">phone/alerts.php</string>
 <string name="news_loading">Loading...</string>

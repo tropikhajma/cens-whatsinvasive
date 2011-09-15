@@ -670,20 +670,34 @@ public class WhatsInvasive extends Activity implements Observer {
         return dialog;
     }
 
+    // When back button is pressed, a dialog window pops up asking to confirm
+    // to close the app. Idea from CENS's BudBurst Mobile App.
+    // Adam Brenner <aebrenne@uci.edu> 09/14/11
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
-            boolean flag = false;
-            if(event.getRepeatCount() == 3) {
-                finish();
-                return true;
-            }
-            else if(event.getRepeatCount() == 0 && flag == false){
-                showToast(getString(R.string.exit_back_alert), Toast.LENGTH_SHORT);
-                flag = true;
-            }
+        	
+        	new AlertDialog.Builder(this)
+    		.setTitle(getString(R.string.exit_application_title))
+    		.setIcon(R.drawable.icon)
+    		.setMessage(getString(R.string.exit_application_message))
+    		.setPositiveButton(getString(R.string.exit_button_yes), new DialogInterface.OnClickListener() {
+    			@Override
+    			public void onClick(DialogInterface dialog, int which) {
+    				// TODO Auto-generated method stub
+    				finish();
+    			}
+    		})
+    		.setNegativeButton(getString(R.string.exit_button_no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					// nothing to do
+				}
+    		})
+    		.show();
         }
-
+        
         return false;
     }
 }
