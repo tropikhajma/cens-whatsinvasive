@@ -112,7 +112,7 @@ public class TagTasks extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //captureLocaton();
+                    	Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                     }
                 });
         

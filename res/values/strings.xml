@@ -221,12 +221,8 @@
 <string name="preferences_category_location">Location</string>
 <string name="preferences_title_location_service_on">Enable Auto-Location</string>
 <string name="preferences_summary_location_service_on">Enable or disable the auto-location service</string>
-<string name="preferences_title_select_location">Select Location &amp; County</string>
-<string name="preferences_summary_select_location">Change your selected county and park</string>
-<string name="preferences_title_select_location_park">Select Location</string>
-<string name="preferences_summary_select_location_park">Change your selected park</string>
-<string name="preferences_title_select_location_county">Select County</string>
-<string name="preferences_summary_select_location_county">Change your selected county</string>
+<string name="preferences_title_select_location">Select Location</string>
+<string name="preferences_summary_select_location">Change your selected park</string>
 <string name="preferences_title_refresh_lists">Refresh Lists</string>
 <string name="preferences_summary_refresh_lists">Update to the latest invasives lists</string>
 <string name="preferences_category_login">Login</string>

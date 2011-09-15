@@ -3,19 +3,21 @@ cens-whatsinvasive
 
 Invasive species are a threat to native plants and animals, crowding natives, consuming food sources, or acting as fire hazards. http://whatsinvasive.com/
 
-Branches
---------
+Branches/Contract
+-----------------
+It is safe to assume, that anything in the master branch is a stable release, and will not contain any bugs. This is the _contract_ with the master branch. Other branches, may contain bugs.
+
 * master 
 	- 2.2 source code. Latest build with _(hopefully)_ no bugs
 
 * usda-list 
-	- Based off master branch, support for a global wide "park" on invasive species determined by USDA. See branch for more information
+	- Based off master branch, support for a global wide "park" on invasive species determined by USDA. See branch's README for more information
 	
 
 Bugs
------
-File a GitHub Issue
+----
+See GitHub Issues
 
 Contacts
----------
+--------
 This forked project is maintained by Adam Brenner _<aebrenne@uci.edu>_ working for CENS@UCLA on WhatsInvasive. Projected maintained by Eric Graham _<egraham@cens.ucla.edu>_
