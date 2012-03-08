@@ -138,7 +138,7 @@
 <string name="please_wait_first_time">Please wait while the invasives list updates for the first time...</string>
 <string name="proximity">Proximity: </string>
 <string name="queue_actions">Queue Actions</string>
-<string name="queue_do_not_upload">Do not upload</string>
+<string name="queue_do_not_upload">Delete Item</string>
 <string name="queue_message_empty">Queue is empty.</string>
 <string name="queue_message_full">Your observations above are waiting to be sent to the server.\n\nYou may select any observation above to view or delete at this time.\n\nVisit http://whatsinvasive.com to edit or delete your previously uploaded observations.</string>
 <string name="queue_no_location">There is no associated location with this tag.</string>
