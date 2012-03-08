@@ -402,6 +402,7 @@ public class TagTasks extends Activity {
         
         if (saveToDatabase()) {
             Toast.makeText(getApplicationContext(), getString(R.string.invasive_mapped_notice), 5).show();
+            finish();
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.invasive_mapping_failed), 
                     Toast.LENGTH_LONG).show();
