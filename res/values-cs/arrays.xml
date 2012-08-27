@@ -1,0 +1,15 @@
+<resources>
+<string-array name="debug_emails">
+	<item>"egraham@cens.ucla.edu"</item>
+</string-array>
+<string-array name="tag_quantity_choices">
+	<item>"jedna"</item>
+	<item>"několik"</item>
+	<item>"mnoho"</item>
+</string-array>
+<string-array name="tag_quantity_descriptions">
+	<item>"Nalezen jeden jedinec invazního druhu"</item>
+	<item>"Nalezeno několik jedinců invazního druhu"</item>
+	<item>"Nalezeno mnoho jedinců invazního druhu"</item>
+</string-array>
+</resources>
