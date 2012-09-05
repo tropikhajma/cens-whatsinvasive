@@ -52,11 +52,7 @@ public class TagHelp extends Activity {
         super.onResume();
         
         mIds = mDb.getAreaTagIDsFromTagID(mId, mType);
-        
-        for(int id: mIds) {
-            addTagView(id);
-        }
-        
+        addTagView(mId);
         mWorkspace.setCurrentScreen(mIds.indexOf(mId));
     }
     
