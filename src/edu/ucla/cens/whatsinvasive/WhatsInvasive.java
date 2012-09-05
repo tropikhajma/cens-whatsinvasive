@@ -410,11 +410,13 @@ public class WhatsInvasive extends Activity implements Observer {
         long parkId = LocationService.getParkId(this);
         int availablePlantTags = db.getTagsAvailable(parkId, TagType.WEED);
         int availableAnimalTags = db.getTagsAvailable(parkId, TagType.BUG);
+        int availableBiolibTags = db.getTagsAvailable(parkId, TagType.BIOLIB);
 
         db.close();
 
         Button captureWeed = (Button) this.findViewById(R.id.ButtonTagWeed);
         Button captureBug = (Button) this.findViewById(R.id.ButtonTagPest);
+        Button captureBiolib = (Button) this.findViewById(R.id.ButtonTagBiolib);
 
         captureWeed.setEnabled(availablePlantTags > 0);
         captureWeed
@@ -426,6 +428,11 @@ public class WhatsInvasive extends Activity implements Observer {
                 .setText((availableAnimalTags > 0) ? R.string.main_button_mappest
                         : R.string.main_button_nopests);
         captureBug.setTextSize((availableAnimalTags > 0) ? 20 : 18);
+        captureBiolib.setEnabled(availableBiolibTags > 0);
+        captureBiolib
+                .setText((availableBiolibTags > 0) ? R.string.main_button_mapbiolib
+                        : R.string.main_button_nobiolib);
+        captureBiolib.setTextSize((availableBiolibTags > 0) ? 20 : 18);
 
         // Set park caption
         TextView location = (TextView) this.findViewById(R.id.Location);
@@ -512,6 +519,14 @@ public class WhatsInvasive extends Activity implements Observer {
         WhatsInvasive.this.startActivity(intent);
     }
 
+    public void onTagBiolibClick(View v) {
+        mPreferences.edit().putBoolean("gps_off_alert2", true).commit();
+        Intent intent = new Intent(WhatsInvasive.this,
+                TagLocation.class);
+        intent.putExtra("Type", TagType.BIOLIB);
+        WhatsInvasive.this.startActivity(intent);
+    }
+    
     public void onMapClick(View v) {
         Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
     }

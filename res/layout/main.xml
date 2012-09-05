@@ -43,6 +43,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+            <Button android:id="@+id/ButtonTagBiolib"
+                style="@style/HomeButton"
+                android:onClick="onTagBiolibClick"
+                android:text="@string/main_button_mapbiolib"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/biolib_icon"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
             <Button android:id="@+id/ButtonMap"
                 style="@style/HomeButton"
                 android:onClick="onMapClick"

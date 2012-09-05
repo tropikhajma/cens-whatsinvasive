@@ -38,6 +38,7 @@ import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import edu.ucla.cens.whatsinvasive.R;
 import edu.ucla.cens.whatsinvasive.TagType;
 import edu.ucla.cens.whatsinvasive.data.ITagDatabase;
@@ -501,14 +502,19 @@ public class LocationService extends Service {
             // Updates the currently selected area's tags
             List<NameValuePair> qparams = new ArrayList<NameValuePair>();
             qparams.add(new BasicNameValuePair("id", String.valueOf(id)));
+            
+            String base_url = "";
+            switch (type) {
+            case BIOLIB: base_url = context.getString(R.string.biolib_base_url); break;
+            default: base_url = context.getString(R.string.base_url); break;
+            }
 
             // TODO Get last updated from the area's table row
             // if(updated!=null)
             // qparams.add(new BasicNameValuePair("u", updated));
 
             try {
-                StringBuilder result = sendRequest(context
-                        .getString(R.string.base_url), type.url(), qparams);
+                StringBuilder result = sendRequest(base_url, type.url(), qparams);
 
                 // If HTTP status is 304 do nothing
                 if (result != null) {
@@ -608,7 +614,7 @@ public class LocationService extends Service {
 
                 HttpClient httpClient = new CustomHttpClient();
                 HttpGet request = new HttpGet(uri);
-
+                Log.w(TAG,"Trying to download image"+uri);
                 HttpResponse response = null;
                 try {
                     response = httpClient.execute(request);

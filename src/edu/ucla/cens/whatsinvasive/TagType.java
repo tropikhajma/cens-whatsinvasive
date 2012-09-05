@@ -10,7 +10,8 @@ import java.util.Map;
  */
 public enum TagType {
     WEED(0, "phone/gettags.php", R.string.tag_title_weeds),
-    BUG(1, "phone/getanimaltags.php", R.string.tag_title_pests);
+    BUG(1, "phone/getanimaltags.php", R.string.tag_title_pests),
+    BIOLIB(2, "DWN/smspecies-cs.json", R.string.tag_title_mapping_species);
     
     private static final Map<Integer,TagType> lookup = new Hashtable<Integer,TagType>();
     private final int value;

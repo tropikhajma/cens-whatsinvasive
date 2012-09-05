@@ -21,6 +21,8 @@
 <string name="attempting_download_new_invasive">Attempting to download new invasives list...</string>
 <string name="auto_upload_query">What\'s Invasive! for Android is designed to automatically upload user data to our What\'s Invasive servers. Would you like to set automatic upload on now? (Note: You can change this value later in Settings)</string>
 <string name="base_url">sm.whatsinvasive.com</string>
+<!-- <string name="biolib_base_url">www.biolib.cz</string> -->
+<string name="biolib_base_url">tropikhajma.sweb.cz</string>
 <string name="camera_take_photo">Take photo by pressing camera button or center directional pad.</string>
 <string name="cancel">Cancel</string>
 <string name="confirm">Confirm</string>
@@ -106,6 +108,8 @@
 <string name="main_button_nopests">No Pests Listed</string>
 <string name="main_button_mapweed">Weeds</string>
 <string name="main_button_noweeds">No Weeds Listed</string>
+<string name="main_button_mapbiolib">Biolib</string>
+<string name="main_button_nobiolib">No Biolib species listed</string>
 <string name="main_button_map">Map</string>
 <string name="main_button_results">Results</string>
 <string name="main_button_news">News</string>
@@ -263,4 +267,5 @@
 
 <string name="tag_title_weeds">Weeds</string>
 <string name="tag_title_pests">Pests</string>
+<string name="tag_title_mapping_species">Mapování druhů</string>
 </resources>
